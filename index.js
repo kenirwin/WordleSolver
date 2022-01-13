@@ -7,7 +7,9 @@ const Solver = require('./Solver');
    five letters long
    with no repeating letters
 */
-const wordlist = fs.readFileSync('five-letter-words.txt', 'utf8').split('\n');
+const wordlist = fs
+  .readFileSync('./wordlists/top-10000.txt', 'utf8')
+  .split('\n');
 
 let solver = new Solver(wordlist);
 console.log(solver.GetLowScore());

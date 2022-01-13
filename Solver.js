@@ -1,11 +1,13 @@
 module.exports = class Solver {
-  constructor(wordlist) {
+  constructor(wordlist, length = 5) {
     // frequency based on: https://www3.nd.edu/~busiforc/handouts/cryptography/letterfrequencies.html
     let frequencyString = 'EARIOTNSLCUDPMHGBFYWKVXZJQ'.toLowerCase();
     // split frequencyString into an array of characters
     this.frequencyArray = frequencyString.split('');
     // split wordlist into an array of words
     this.wordlist = wordlist;
+    // filter wordlist to words of set length
+    this.wordlist = this.wordlist.filter((word) => word.length === length);
   }
 
   GetStringScore(str) {

@@ -7,29 +7,26 @@ const Solver = require('./Solver');
    five letters long
    with no repeating letters
 */
-const wordlist = fs
-  .readFileSync('./wordlists/top-10000.txt', 'utf8')
-  .split('\n');
+const wordlist = fs.readFileSync('./wordlists/top-20k.txt', 'utf8').split('\n');
 
 let solver = new Solver(wordlist);
 console.log(solver.GetLowScore());
 
 /* everything after this is custom code to solve a particular puzzle */
-solver.ExcludeLetterFromWordlist('i');
-solver.ExcludeLetterFromWordlist('s');
-solver.ExcludeLetterFromWordlist('e');
-solver.RequireLetterFromWordlist('a');
-solver.RequireLetterFromWordlist('r');
-solver.ExcludeLetterFromPosition('a', 0);
-solver.ExcludeLetterFromPosition('r', 1);
-console.log(solver.GetLowScore());
-solver.ExcludeLetterFromWordlist('c');
-solver.ExcludeLetterFromWordlist('l');
-solver.ExcludeLetterFromPosition('r', 2);
-solver.RequireLetterInPosition('a', 1);
-solver.RequireLetterInPosition('o', 3);
-console.log(solver.GetLowScore());
-solver.RequireLetterInPosition('r', 4);
-solver.ExcludeLetterFromWordlist('m');
+solver.ExcludeLetterFromWordlist('r');
 solver.ExcludeLetterFromWordlist('n');
+solver.RequireLetterInPosition('a', 0);
+solver.RequireLetterFromWordlist('e');
+solver.ExcludeLetterFromPosition('e', 2);
+console.log(solver.GetLowScore());
+solver.RequireLetterInPosition('e', 3);
+solver.ExcludeLetterFromWordlist('s');
+solver.ExcludeLetterFromWordlist('t');
+console.log(solver.GetLowScore());
+solver.ExcludeLetterFromWordlist('i');
+solver.ExcludeLetterFromWordlist('m');
+solver.ExcludeLetterFromWordlist('d');
+console.log(solver.GetLowScore());
+solver.ExcludeLetterFromWordlist('l');
+solver.RequireLetterInPosition('y', 4);
 console.log(solver.GetLowScore());

@@ -17,7 +17,7 @@ solver.ExcludeLetterFromWordlist('r');
 solver.ExcludeLetterFromWordlist('s');
 solver.ExcludeLetterFromWordlist('i');
 solver.RequireLetterInPosition('a', 0);
-solver.RequireLetterFromWordlist('e');
+solver.RequireLetterInWordlist('e');
 solver.ExcludeLetterFromPosition('e', 4);
 console.log(solver.GetLowScore(false));
 // console.log(solver.GetLowScore());

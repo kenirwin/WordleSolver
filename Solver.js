@@ -35,17 +35,31 @@ module.exports = class Solver {
   RequireLetterInPosition(letter, position) {
     this.wordlist = this.wordlist.filter((word) => word[position] === letter);
   }
+  WordHasRepeatingLetters(word) {
+    for (let i = 0; i < word.length; i++) {
+      if (word.indexOf(word[i], i + 1) !== -1) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-  GetLowScore() {
+  GetLowScore(allowRepeatLetters = true) {
     let lowscore = 100;
     let lowword = '';
     this.wordlist.forEach((word) => {
-      let score = this.GetStringScore(word);
-      if (score < lowscore && score > 0) {
-        lowscore = score;
-        lowword = word;
+      if (
+        !this.WordHasRepeatingLetters(word) ||
+        (this.WordHasRepeatingLetters(word) && allowRepeatLetters)
+      ) {
+        let score = this.GetStringScore(word);
+        if (score < lowscore && score > 0) {
+          lowscore = score;
+          lowword = word;
+        }
       }
     });
+
     return lowword;
   }
 };

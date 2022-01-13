@@ -7,6 +7,7 @@ module.exports = class Solver {
     // split wordlist into an array of words
     this.wordlist = wordlist;
     // filter wordlist to words of set length
+    this.requiredLetters = [];
     this.wordlist = this.wordlist.filter((word) => word.length === length);
   }
 
@@ -22,11 +23,16 @@ module.exports = class Solver {
   }
 
   ExcludeLetterFromWordlist(letter) {
-    this.wordlist = this.wordlist.filter((word) => word.indexOf(letter) === -1);
+    if (!this.requiredLetters.includes(letter)) {
+      this.wordlist = this.wordlist.filter(
+        (word) => word.indexOf(letter) === -1
+      );
+    }
   }
 
-  RequireLetterFromWordlist(letter) {
+  RequireLetterInWordlist(letter) {
     this.wordlist = this.wordlist.filter((word) => word.indexOf(letter) !== -1);
+    this.requiredLetters.push(letter);
   }
 
   ExcludeLetterFromPosition(letter, position) {
@@ -34,6 +40,7 @@ module.exports = class Solver {
   }
   RequireLetterInPosition(letter, position) {
     this.wordlist = this.wordlist.filter((word) => word[position] === letter);
+    this.requiredLetters.push(letter);
   }
   WordHasRepeatingLetters(word) {
     for (let i = 0; i < word.length; i++) {
@@ -60,6 +67,6 @@ module.exports = class Solver {
       }
     });
 
-    return lowword;
+    return { nextWordToTry: lowword, listLength: this.wordlist.length };
   }
 };

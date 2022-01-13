@@ -2,20 +2,26 @@ module.exports = class ResultsInterpreter {
   constructor(word, results) {
     this.word = word.split('');
     this.results = results.split('');
-    let lettersToExclude = this.getLettersToExclude();
-    // console.log('exclude', lettersToExclude);
+    this.lettersToExcludeFromPosition = [];
     let lettersToRequire = this.getLettersToRequire();
     // console.log('require', lettersToRequire);
-    let letterstoRequirePosition = this.getLettersToRequirePosition();
+    let lettersToRequirePosition = this.getLettersToRequirePosition();
     // console.log('require position', letterstoRequirePosition);
-    return { lettersToExclude, lettersToRequire, letterstoRequirePosition };
+    let lettersToExclude = this.getLettersToExclude();
+    // console.log('exclude', lettersToExclude);
+    return {
+      lettersToRequire,
+      lettersToRequirePosition,
+      lettersToExclude,
+      lettersToExcludeFromPosition: this.lettersToExcludeFromPosition,
+    };
   }
 
   getLettersToExclude() {
     // find each underscore in results
     let underscoreIndexes = [];
     for (let i = 0; i < this.results.length; i++) {
-      if (this.results[i] === '_') {
+      if (this.results[i] === '-') {
         underscoreIndexes.push(i);
       }
     }
@@ -31,6 +37,10 @@ module.exports = class ResultsInterpreter {
       // if results[i] matches regex /[a-z]/
       if (this.results[i].match(/[a-z]/)) {
         lowercaseIndexes.push(i);
+        this.lettersToExcludeFromPosition.push({
+          letter: this.word[i],
+          position: i,
+        });
       }
     }
     // for each uppercaseIndex get the matching letter in word

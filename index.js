@@ -1,35 +1,60 @@
 const fs = require('fs');
+let wordlist = fs.readFileSync('./wordlists/top-20k.txt', 'utf8').split('\n');
+const scrabble = fs
+  .readFileSync('./wordlists/scrabble.txt', 'utf8')
+  .split('\n');
+// console.log('starting wordlist length: ' + wordlist.length);
+// find the overlap between wordlist and scrabble
+wordlist = wordlist.filter((word) => scrabble.includes(word));
+// console.log('revised wordlist length: ' + wordlist.length);
+const inquirer = require('inquirer');
+const Interpreter = require('./ResultsInterpreter');
 const Solver = require('./Solver');
+const solver = new Solver(wordlist);
+let weWon = false;
 
-// read file synchronously into an array of lines
-/* the wordlist contains the top 10000 most common words in English 
-   and is then limited to non-proper nouns
-   five letters long
-   with no repeating letters
-*/
-const wordlist = fs.readFileSync('./wordlists/top-20k.txt', 'utf8').split('\n');
+results = solver.GetLowScore(false);
+console.log('List Length: ' + results.listLength);
+console.log('TRY: ' + results.nextWordToTry);
+OneRound(results.nextWordToTry);
 
-let solver = new Solver(wordlist);
-console.log(solver.GetLowScore(false));
-
-/* everything after this is custom code to solve a particular puzzle */
-solver.ExcludeLetterFromWordlist('r');
-solver.ExcludeLetterFromWordlist('s');
-solver.ExcludeLetterFromWordlist('i');
-solver.RequireLetterInPosition('a', 0);
-solver.RequireLetterInWordlist('e');
-solver.ExcludeLetterFromPosition('e', 4);
-console.log(solver.GetLowScore(false));
-// console.log(solver.GetLowScore());
-solver.RequireLetterInPosition('e', 3);
-solver.ExcludeLetterFromWordlist('c');
-solver.ExcludeLetterFromWordlist('t');
-solver.ExcludeLetterFromWordlist('d');
-console.log(solver.GetLowScore(false));
-solver.ExcludeLetterFromWordlist('n');
-solver.ExcludeLetterFromWordlist('g');
-solver.ExcludeLetterFromWordlist('l');
-console.log(solver.GetLowScore());
-// solver.ExcludeLetterFromWordlist('l');
-// solver.RequireLetterInPosition('y', 4);
-// console.log(solver.GetLowScore());
+function OneRound(wordToTry) {
+  inquirer
+    .prompt([{ name: 'correct', message: 'What is the correct answer (y/n)?' }])
+    .then((answers) => {
+      if (answers.correct === 'y') {
+        console.log('Correct!');
+        weWon = true;
+      } else {
+        inquirer
+          .prompt([
+            {
+              name: 'results',
+              message:
+                'Results (uppercase for Correct, - for Wrong, lowercase for Wrong Place)?',
+            },
+          ])
+          .then((answers) => {
+            let instructions = new Interpreter(wordToTry, answers.results);
+            console.log(instructions);
+            // always require before exluding
+            instructions.lettersToRequire.forEach((letter) => {
+              solver.RequireLetterInWordlist(letter);
+            });
+            instructions.lettersToRequirePosition.forEach((letter) => {
+              solver.RequireLetterInPosition(letter.letter, letter.position);
+            });
+            instructions.lettersToExcludeFromPosition.forEach((item) => {
+              solver.ExcludeLetterFromPosition(item.letter, item.position);
+            });
+            instructions.lettersToExclude.forEach((letter) => {
+              solver.ExcludeLetterFromWordlist(letter);
+            });
+            results = solver.GetLowScore();
+            console.log('List Length: ' + results.listLength);
+            console.log('TRY: ' + results.nextWordToTry);
+            OneRound(results.nextWordToTry);
+          });
+      }
+    });
+}

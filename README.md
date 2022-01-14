@@ -1,5 +1,12 @@
 To-Do:
 
+Bugs:
+
+- have a way to rule out a duplicate letter ("there are not two As")
+- use a bigger wordlist than 20k, but smaller than scrabble
+
+Features:
+
 - repeat or not based on how much we've guessed so far
 - create a scrabble-reduced 20k list
 - create reduction script

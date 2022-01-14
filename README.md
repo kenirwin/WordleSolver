@@ -1,5 +1,6 @@
 To-Do:
 
+- repeat or not based on how much we've guessed so far
 - create a scrabble-reduced 20k list
 - create reduction script
 - allow for dynamic reduction

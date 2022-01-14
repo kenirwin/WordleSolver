@@ -4,6 +4,8 @@ Bugs:
 
 - have a way to rule out a duplicate letter ("there are not two As")
 - use a bigger wordlist than 20k, but smaller than scrabble
+- let's try:
+  http://www.mieliestronk.com/wordlist.html
 
 Features:
 

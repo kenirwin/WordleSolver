@@ -1,3 +1,12 @@
+To-Do:
+
+- create a scrabble-reduced 20k list
+- create reduction script
+- allow for dynamic reduction
+- set up a config file instead of config in the index
+- dynamic frequency adjustment
+- dynamic (or static) letters-in-place discernment (in the remaining list, what's the most likely first letter)
+
 Wordlists:
 
 20k from Google:

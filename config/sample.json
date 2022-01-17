@@ -1,0 +1,7 @@
+{
+    "note": "copy this file to default.json and edit it",
+    "wordLength": "5",
+    "wordfile": "top-20k.txt",
+    "wordlistIsAllCorrectLength": "false",
+    "needToRemoveProperNouns": "true"
+}

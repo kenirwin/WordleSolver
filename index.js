@@ -1,15 +1,7 @@
-const fs = require('fs');
-let wordlist = fs.readFileSync('./wordlists/top-20k.txt', 'utf8').split('\n');
-const scrabble = fs
-  .readFileSync('./wordlists/scrabble.txt', 'utf8')
-  .split('\n');
-// console.log('starting wordlist length: ' + wordlist.length);
-// find the overlap between wordlist and scrabble
-wordlist = wordlist.filter((word) => scrabble.includes(word));
-// console.log('revised wordlist length: ' + wordlist.length);
 const inquirer = require('inquirer');
 const Interpreter = require('./ResultsInterpreter');
 const Solver = require('./Solver');
+const wordlist = require('./PrepareWordlist');
 const solver = new Solver(wordlist);
 let weWon = false;
 

@@ -5,6 +5,7 @@ const wordlist = require('./PrepareWordlist');
 const solver = new Solver(wordlist);
 let weWon = false;
 
+console.log('Start at: ' + 'https://www.powerlanguage.co.uk/wordle/');
 results = solver.GetLowScore(false);
 console.log('List Length: ' + results.listLength);
 console.log('TRY: ' + results.nextWordToTry);

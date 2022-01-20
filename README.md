@@ -1,13 +1,15 @@
-To-Do:
+Game URL: https://www.powerlanguage.co.uk/wordle/
 
-Bugs:
+## To-Do:
+
+### Bugs:
 
 - have a way to rule out a duplicate letter ("there are not two As")
 - use a bigger wordlist than 20k, but smaller than scrabble
 - let's try:
   http://www.mieliestronk.com/wordlist.html
 
-Features:
+### Features:
 
 - repeat or not based on how much we've guessed so far
 - create a scrabble-reduced 20k list
@@ -17,7 +19,7 @@ Features:
 - dynamic frequency adjustment
 - dynamic (or static) letters-in-place discernment (in the remaining list, what's the most likely first letter)
 
-Wordlists:
+## Wordlists:
 
 20k from Google:
 https://raw.githubusercontent.com/first20hours/google-10000-english/master/20k.txt
